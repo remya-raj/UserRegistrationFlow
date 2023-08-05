@@ -118,7 +118,10 @@ fun LoginSignUpScreen(
                 Text(selectedCountry)
                 Icon(
                     modifier = Modifier.padding(vertical = 7.dp),
-                    painter = painterResource(id = R.drawable.ic_arrow_down),
+                    painter = if (expanded)
+                        painterResource(id = R.drawable.ic_arrow_up)
+                    else
+                        painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "arrow"
                 )
             }
