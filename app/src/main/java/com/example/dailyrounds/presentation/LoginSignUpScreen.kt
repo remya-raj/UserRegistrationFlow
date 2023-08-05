@@ -53,19 +53,21 @@ fun LoginSignUpScreen(
 
     val context = LocalContext.current
     val selectCountry = stringResource(id = R.string.select_country)
-    var isSignUpState by remember { mutableStateOf(false) }
+    var isSignUpState by remember { mutableStateOf(false) } //state to switch between signup and login ui
     var userNameInput by remember { mutableStateOf("") }
     var passwordInput by remember { mutableStateOf("") }
     var selectedCountry by remember { mutableStateOf(selectCountry) }
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) } //country dropdown state
 
-    fun loginSetUp() {
+    // login screen date reset
+    fun loginReset() {
         isSignUpState = false
         userNameInput = ""
         passwordInput = ""
     }
 
-    fun signUpSetUp() {
+    //sign up screen data reset
+    fun signUpReset() {
         isSignUpState = true
         userNameInput = ""
         passwordInput = ""
@@ -77,6 +79,7 @@ fun LoginSignUpScreen(
 
         Header()
 
+        //username
         TextField(modifier = Modifier
             .padding(top = 15.dp)
             .clip(RoundedCornerShape(30.dp))
@@ -88,6 +91,7 @@ fun LoginSignUpScreen(
                 userNameInput = it
             })
 
+        //password
         TextField(modifier = Modifier
             .padding(top = 10.dp)
             .clip(RoundedCornerShape(30.dp))
@@ -100,6 +104,7 @@ fun LoginSignUpScreen(
             })
 
         if (isSignUpState) {
+            //country dropdown
             TextButton(
                 onClick = { expanded = true },
                 modifier = Modifier
@@ -136,6 +141,7 @@ fun LoginSignUpScreen(
         }
 
         if (!isSignUpState) {
+            //login
             Button(modifier = Modifier
                 .padding(top = 15.dp)
                 .clip(RoundedCornerShape(30.dp))
@@ -146,7 +152,7 @@ fun LoginSignUpScreen(
                 ),
                 onClick = {
                     if (isSignUpState) {
-                        loginSetUp()
+                        loginReset()
                     } else {
                         handleLoginErrorMessage(
                             context = context,
@@ -180,6 +186,7 @@ fun LoginSignUpScreen(
         }
 
         if (isSignUpState) {
+            //signup
             Button(modifier = Modifier
                 .padding(top = 15.dp)
                 .clip(RoundedCornerShape(30.dp))
@@ -194,12 +201,12 @@ fun LoginSignUpScreen(
                             context = context,
                             username = userNameInput,
                             password = passwordInput,
-                            country = selectCountry,
+                            country = selectedCountry,
                             verifyValidUsername = verifyValidUsername,
                             onSignUp = onSignUp
                         )
                     } else {
-                        signUpSetUp()
+                        signUpReset()
                     }
                 }) {
                 Text(
